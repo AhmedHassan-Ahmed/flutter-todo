@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todolist/Router.dart';
+import 'package:flutter_todolist/core/styles/Units.dart';
 import 'package:flutter_todolist/core/styles/color_manager.dart';
 
 class MyApp extends StatelessWidget {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: ColorManager.ColorBrandprimaryDefault,
             foregroundColor: ColorManager.ColorNeutralWhite,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(Units.radius(context, 20)),
             ),
           ),
         ),

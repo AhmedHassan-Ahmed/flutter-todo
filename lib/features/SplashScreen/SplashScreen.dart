@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_todolist/core/styles/Units.dart';
 import 'package:flutter_todolist/core/styles/color_manager.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,8 +17,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(Duration(seconds: 3), () {
-      context.go('/home');
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        context.go('/home');
+      }
     });
   }
 
@@ -27,31 +30,38 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: ColorManager.ColorBrandprimaryDefault,
       body: Center(
         child: Container(
-          alignment: .center,
+          alignment: Alignment.center,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-
             children: [
               Container(
-                width: 70,
-                height: 70,
+                width: Units.width(context, 70),
+                height: Units.height(context, 70),
                 decoration: BoxDecoration(
-                  borderRadius: .circular(13.8),
+                  borderRadius: BorderRadius.circular(
+                    Units.radius(context, 13.8),
+                  ),
                   color: Colors.white,
                 ),
                 child: Icon(
                   Icons.checklist,
-                  size: 70,
+                  size: Units.width(context, 70),
                   color: ColorManager.ColorBrandprimaryDefault,
                 ),
               ),
               Text(
-                "Todoapp ",
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700),
+                'Todoapp ',
+                style: TextStyle(
+                  fontSize: Units.font(context, 26),
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               Text(
-                "The best to do list application for you ",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                'The best to do list application for you ',
+                style: TextStyle(
+                  fontSize: Units.font(context, 14),
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ],
           ),

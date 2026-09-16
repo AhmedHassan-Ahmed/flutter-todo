@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todolist/core/cubit/auth_cubit.dart';
 import 'package:flutter_todolist/core/cubit/auth_state.dart';
+import 'package:flutter_todolist/core/styles/Units.dart';
 import 'package:flutter_todolist/core/styles/color_manager.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,7 +25,6 @@ class _SigninPageState extends State<SigninPage> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
@@ -32,103 +32,91 @@ class _SigninPageState extends State<SigninPage> {
           backgroundColor: ColorManager.ColorNeutralWhite,
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 48),
+              padding: EdgeInsets.symmetric(
+                horizontal: Units.width(context, 48),
+              ),
               child: Column(
                 children: [
-                  const SizedBox(height: 35),
-
-                  const Text(
+                  SizedBox(height: Units.height(context, 35)),
+                  Text(
                     'Welcome Back!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: Units.font(context, 30),
                       fontWeight: FontWeight.bold,
                       color: ColorManager.ColorNeutralPrimary,
                     ),
                   ),
-
-                  const SizedBox(height: 5),
-
-                  const Text(
+                  SizedBox(height: Units.height(context, 5)),
+                  Text(
                     'Your work faster and structured with Todayapp',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: Units.font(context, 15),
                       color: ColorManager.ColorNeutralSecondary,
                     ),
                   ),
-
-                  const SizedBox(height: 15),
-
-                  const Align(
+                  SizedBox(height: Units.height(context, 15)),
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Email Address',
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: Units.font(context, 15),
                         fontWeight: FontWeight.w500,
                         color: ColorManager.ColorNeutralPrimary,
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 5),
-
+                  SizedBox(height: Units.height(context, 5)),
                   TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(fontSize: 15),
+                    style: TextStyle(fontSize: Units.font(context, 15)),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: ColorManager.ColorNeutralBackground,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 38,
-                        vertical: 30,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: Units.width(context, 38),
+                        vertical: Units.height(context, 30),
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 15),
-
-                  const Align(
+                  SizedBox(height: Units.height(context, 15)),
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Password',
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: Units.font(context, 15),
                         fontWeight: FontWeight.w500,
                         color: ColorManager.ColorNeutralPrimary,
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 5),
-
+                  SizedBox(height: Units.height(context, 5)),
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
-                    style: const TextStyle(fontSize: 15),
+                    style: TextStyle(fontSize: Units.font(context, 15)),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: ColorManager.ColorNeutralBackground,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 38,
-                        vertical: 30,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: Units.width(context, 38),
+                        vertical: Units.height(context, 30),
                       ),
                     ),
                   ),
-
                   const Spacer(),
-
                   if (state is AuthFailedState)
                     Text(
                       state.message,
                       style: const TextStyle(color: Colors.red),
                     ),
-
                   SizedBox(
                     width: double.infinity,
-                    height: 90,
+                    height: Units.height(context, 90),
                     child: ElevatedButton(
                       onPressed: () async {
                         await context.read<AuthCubit>().login(
@@ -145,33 +133,33 @@ class _SigninPageState extends State<SigninPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorManager.ColorBrandprimaryDefault,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(
+                            Units.radius(context, 20),
+                          ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Units.width(context, 25),
+                        ),
                       ),
                       child: state is AuthLoadingState
                           ? const CircularProgressIndicator()
-                          : const Text(
+                          : Text(
                               'Sign In',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: Units.font(context, 18),
                                 color: ColorManager.ColorNeutralWhite,
                               ),
                             ),
                     ),
                   ),
-
-                  Container(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        context.go('login');
-                      },
-                      child: Text("login"),
-                    ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.go('login');
+                    },
+                    child: const Text('login'),
                   ),
-
-                  const SizedBox(height: 40),
-                  const SizedBox(height: 30),
+                  SizedBox(height: Units.height(context, 40)),
+                  SizedBox(height: Units.height(context, 30)),
                 ],
               ),
             ),

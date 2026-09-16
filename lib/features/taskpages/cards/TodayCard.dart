@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todolist/core/cubit/home_cubit.dart';
 import 'package:flutter_todolist/core/models/task_model.dart';
+import 'package:flutter_todolist/core/styles/Units.dart';
 import 'package:flutter_todolist/core/styles/color_manager.dart';
 
 class TodayCard extends StatefulWidget {
@@ -15,6 +16,7 @@ class TodayCard extends StatefulWidget {
 
 class _TodayCardState extends State<TodayCard> {
   bool isdone = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,7 +34,7 @@ class _TodayCardState extends State<TodayCard> {
           context: context,
           builder: (contextOfdialog) {
             return AlertDialog(
-              title: Text('Edit Task', textAlign: .center),
+              title: const Text('Edit Task', textAlign: TextAlign.center),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -40,7 +42,6 @@ class _TodayCardState extends State<TodayCard> {
                     controller: taskNameController,
                     decoration: const InputDecoration(labelText: 'Task name'),
                   ),
-
                   TextField(
                     controller: descriptionController,
                     decoration: const InputDecoration(labelText: 'Description'),
@@ -54,7 +55,6 @@ class _TodayCardState extends State<TodayCard> {
                   },
                   child: const Text('Cancel'),
                 ),
-
                 ElevatedButton(
                   onPressed: () async {
                     await cubit.updateTask(
@@ -78,11 +78,11 @@ class _TodayCardState extends State<TodayCard> {
       child: Stack(
         children: [
           Container(
-            margin: .symmetric(horizontal: 30),
-            height: 200,
+            margin: EdgeInsets.symmetric(horizontal: Units.width(context, 30)),
+            height: Units.height(context, 200),
             decoration: BoxDecoration(
               color: ColorManager.ColorNeutralWhite,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(Units.radius(context, 12)),
               boxShadow: [
                 BoxShadow(
                   color: ColorManager.ColorNeutralPrimary.withOpacity(0.1),
@@ -93,23 +93,26 @@ class _TodayCardState extends State<TodayCard> {
             ),
           ),
           Container(
-            margin: .symmetric(horizontal: 30),
-            height: 55,
-            decoration: const BoxDecoration(
+            margin: EdgeInsets.symmetric(horizontal: Units.width(context, 30)),
+            height: Units.height(context, 55),
+            decoration: BoxDecoration(
               color: ColorManager.ColorBrandprimaryDefault,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+                topLeft: Radius.circular(Units.radius(context, 12)),
+                topRight: Radius.circular(Units.radius(context, 12)),
               ),
             ),
           ),
           Container(
-            margin: .only(left: 70, top: 85),
-            width: 32,
-            height: 32,
+            margin: EdgeInsets.only(
+              left: Units.width(context, 70),
+              top: Units.height(context, 85),
+            ),
+            width: Units.width(context, 32),
+            height: Units.height(context, 32),
             decoration: BoxDecoration(
               color: ColorManager.ColorBrandprimaryDefault,
-              borderRadius: BorderRadius.circular(7),
+              borderRadius: BorderRadius.circular(Units.radius(context, 7)),
             ),
             child: Checkbox(
               value: widget.task.isdone,
@@ -138,51 +141,66 @@ class _TodayCardState extends State<TodayCard> {
           Row(
             children: [
               Container(
-                margin: .only(left: 120, top: 90),
+                margin: EdgeInsets.only(
+                  left: Units.width(context, 120),
+                  top: Units.height(context, 90),
+                ),
                 child: Text(
                   widget.task.taskname,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: Units.font(context, 13),
                     color: ColorManager.ColorNeutralPrimary,
                   ),
                 ),
               ),
-
               GestureDetector(
                 onTap: () async {
-                  var con = context.read<HomeCubit>();
+                  final con = context.read<HomeCubit>();
                   await con.deleTask(id: widget.task.id);
                   await con.getTasks();
                 },
                 child: Container(
-                  margin: .only(top: 90, left: 130),
-                  child: Icon(Icons.delete),
+                  margin: EdgeInsets.only(
+                    top: Units.height(context, 90),
+                    left: Units.width(context, 130),
+                  ),
+                  child: const Icon(Icons.delete),
                 ),
               ),
             ],
           ),
           Container(
-            margin: .only(left: 50, right: 50, top: 137),
+            margin: EdgeInsets.only(
+              left: Units.width(context, 50),
+              right: Units.width(context, 50),
+              top: Units.height(context, 137),
+            ),
             height: 1,
             color: ColorManager.ColorNeutralLine,
           ),
           Container(
-            margin: .only(left: 50, top: 153),
+            margin: EdgeInsets.only(
+              left: Units.width(context, 50),
+              top: Units.height(context, 153),
+            ),
             child: Text(
               widget.task.description,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: Units.font(context, 16),
                 color: ColorManager.ColorNeutralSecondary,
               ),
             ),
           ),
           Container(
-            margin: .only(right: 50, top: 160),
+            margin: EdgeInsets.only(
+              right: Units.width(context, 50),
+              top: Units.height(context, 160),
+            ),
             alignment: Alignment.centerRight,
             child: Text(
               DateTime.now().toString(),
               style: TextStyle(
-                fontSize: 12,
+                fontSize: Units.font(context, 12),
                 color: ColorManager.ColorNeutralSecondary,
               ),
             ),

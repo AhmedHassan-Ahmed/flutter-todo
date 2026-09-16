@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_todolist/core/styles/color_manager.dart';
 import 'package:flutter_todolist/core/cubit/home_cubit.dart';
 import 'package:flutter_todolist/core/cubit/home_state.dart';
+import 'package:flutter_todolist/core/styles/Units.dart';
+import 'package:flutter_todolist/core/styles/color_manager.dart';
 import 'package:flutter_todolist/features/taskpages/cards/TodayCard.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,35 +29,34 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
-
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+            SizedBox(height: Units.height(context, 30)),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Units.width(context, 20),
+              ),
               child: Text(
                 'Today',
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: Units.font(context, 32),
                   fontWeight: FontWeight.bold,
                   color: ColorManager.ColorNeutralPrimary,
                 ),
               ),
             ),
-
-            const SizedBox(height: 10),
-
-            const Padding(
-              padding: .symmetric(horizontal: 20),
+            SizedBox(height: Units.height(context, 10)),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Units.width(context, 20),
+              ),
               child: Text(
                 'Best platform for creating to-do lists',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: Units.font(context, 18),
                   color: ColorManager.ColorNeutralSecondary,
                 ),
               ),
             ),
-
-            const SizedBox(height: 40),
-
+            SizedBox(height: Units.height(context, 40)),
             Expanded(
               child: BlocBuilder<HomeCubit, HomeState>(
                 buildWhen: (previous, current) =>
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                     current is FailedTodeleteTaskState,
                 builder: (context, state) {
                   if (state is LoadingTaskGettingState) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
 
                   if (state is FailedToGetTaskState) {
@@ -84,7 +84,9 @@ class _HomePageState extends State<HomePage> {
                     }
 
                     return ListView.builder(
-                      padding: .symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Units.width(context, 20),
+                      ),
                       itemCount: state.tasks.length,
                       itemBuilder: (context, index) {
                         final task = state.tasks[index];
