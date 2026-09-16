@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todolist/core/styles/color_manager.dart';
 import 'package:flutter_todolist/core/cubit/home_cubit.dart';
 import 'package:flutter_todolist/core/cubit/home_state.dart';
-import 'package:flutter_todolist/features/taskpages/TodayCard.dart';
+import 'package:flutter_todolist/features/taskpages/cards/TodayCard.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
