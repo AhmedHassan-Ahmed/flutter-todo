@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todolist/core/cubit/auth_cubit.dart';
+import 'package:flutter_todolist/core/cubit/auth_state.dart';
 import 'package:flutter_todolist/core/styles/color_manager.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,10 +9,10 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPage();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPage extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -23,9 +24,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorManager.ColorNeutralWhite,
           body: SafeArea(
@@ -88,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 20),
 
                   const Align(
@@ -114,7 +117,14 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+
                   const Spacer(),
+
+                  if (state is AuthFailedState)
+                    Text(
+                      state.message,
+                      style: const TextStyle(color: Colors.red),
+                    ),
 
                   SizedBox(
                     width: double.infinity,
@@ -126,13 +136,19 @@ class _LoginPageState extends State<LoginPage> {
                           password: _passwordController.text,
                         );
 
-                        if (!context.mounted) return;
+                        if (!mounted) return;
 
-                        context.go('/signin');
+                        if (state is AuthSuccessState) {
+                          context.go('/signin');
+                          print("yes");
+                        }
                       },
-                      child: const Text('Login'),
+                      child: state is AuthLoadingState
+                          ? const CircularProgressIndicator()
+                          : const Text('Login'),
                     ),
                   ),
+
                   Container(
                     child: ElevatedButton(
                       onPressed: () {
@@ -141,6 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text("signin"),
                     ),
                   ),
+
                   const SizedBox(height: 40),
                 ],
               ),
